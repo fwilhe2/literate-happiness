@@ -18,6 +18,9 @@ jobs:
           - "de_DE.UTF-8"
           - "en_US.UTF-8"
 
+    env:
+      LANG: ${{ matrix.LANG }}
+
     steps:
     - uses: actions/checkout@v4
 
@@ -33,10 +36,19 @@ jobs:
         sudo apt-get -qq update && sudo apt-get install -yqq libreoffice libreoffice-l10n-de lloconv
     - run: libreoffice --headless --version
 
-    - run: lloconv foo.ods foo.csv
-    - run: lloconv foo.ods foo.html
-    - run: lloconv foo.ods foo.fods
+    - run: lloconv foo.ods bar.csv
+    - run: lloconv foo.ods bar.html
+    - run: lloconv foo.ods bar.fods
 
-    - run: cat foo.csv
-    - run: cat foo.html
-    - run: cat foo.fods
+
+    - run: lloconv foo.fods baz.csv
+    - run: lloconv foo.fods baz.html
+    - run: lloconv foo.fods baz.ods
+
+
+    - run: cat bar.csv
+    - run: cat bar.html
+    - run: cat bar.fods
+
+    - run: cat baz.csv
+    - run: cat baz.html
