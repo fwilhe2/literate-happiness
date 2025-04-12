@@ -34,8 +34,10 @@ jobs:
         sudo apt-get -qq update && sudo apt-get install -yqq libreoffice libreoffice-l10n-de lloconv
     - run: libreoffice --headless --version
 
-    - run: lloconv https://github.com/fwilhe2/sfods-converter/raw/refs/heads/main/test_data/accountsSpreadsheet.fods accountsSpreadsheet.ods
-    - run: lloconv https://github.com/fwilhe2/sfods-converter/raw/refs/heads/main/test_data/accountsSpreadsheet.fods accountsSpreadsheet.csv
-    - run: lloconv https://github.com/fwilhe2/sfods-converter/raw/refs/heads/main/test_data/accountsSpreadsheet.fods accountsSpreadsheet.html
+    - run: lloconv foo.ods foo.csv
+    - run: lloconv foo.ods foo.html
+    - run: lloconv foo.ods foo.fods
 
-
+    - run: cat foo.csv
+    - run: cat foo.html
+    - run: cat foo.html
