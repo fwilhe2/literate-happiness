@@ -1,0 +1,41 @@
+name: Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+env:
+  LANG: "de_DE.UTF-8"
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.24'
+
+    - name: de_DE.UTF-8
+      run: |
+          sudo locale-gen de_DE.UTF-8
+          sudo update-locale LANG=de_DE.UTF-8
+    - name: date
+      run: |
+          date
+
+    - run: |
+        sudo apt-get -qq update && sudo apt-get install -yqq libreoffice libreoffice-l10n-de lloconv
+    - run: libreoffice --headless --version
+
+    - run: lloconv https://github.com/fwilhe2/sfods-converter/raw/refs/heads/main/test_data/accountsSpreadsheet.fods accountsSpreadsheet.ods
+    - run: lloconv https://github.com/fwilhe2/sfods-converter/raw/refs/heads/main/test_data/accountsSpreadsheet.fods accountsSpreadsheet.csv
+    - run: lloconv https://github.com/fwilhe2/sfods-converter/raw/refs/heads/main/test_data/accountsSpreadsheet.fods accountsSpreadsheet.html
+
+
